@@ -32,18 +32,17 @@ body {
 
 /* Header and Navigation */
 .header {
-    position: fixed;
-    top: 0;
     width: 100%;
-    background: transparent;
     z-index: 1000;
+    padding-top: -3rem;
+    margin-top: -3rem;
 }
 
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 5%;
+    padding: 0 5%;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -112,14 +111,12 @@ body {
 .hero {
     height: 100vh;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/header-bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: var(--white);
-    padding: 0 5%;
-    margin-bottom: 0;
     position: relative;
 }
 
@@ -135,9 +132,15 @@ body {
 }
 
 .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 5%;
     max-width: 800px;
     margin: 0 auto;
-    text-align: center;
 }
 
 .hero h1 {
