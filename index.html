@@ -292,6 +292,15 @@
     </footer>
 
     <script>
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Gallery functionality
         let currentImageIndex = 0;
         let touchStartX = 0;
         let touchEndX = 0;
