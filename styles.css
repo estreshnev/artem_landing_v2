@@ -305,35 +305,94 @@ section h2 {
 }
 
 /* Portfolio Section */
+.portfolio {
+    padding: 4rem 0;
+    overflow: hidden;
+}
+
+.portfolio-scroll {
+    padding: 2rem 5%;
+    margin: 0 -5%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.portfolio-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 2rem;
+    min-width: min-content;
 }
 
 .portfolio-item {
-    position: relative;
-    border-radius: 10px;
+    flex: 0 0 300px;
+    height: 200px;
+    border-radius: 12px;
     overflow: hidden;
-    background: var(--gray-100);
-    aspect-ratio: 16/9;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.portfolio-content {
-    position: absolute;
-    bottom: 0;
+.portfolio-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
     left: 0;
-    right: 0;
-    padding: 2rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    color: var(--white);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
 }
 
-.portfolio-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    margin: auto;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #ccc;
 }
 
 /* FAQ Section */
@@ -804,5 +863,18 @@ section h2 {
     .social-link {
         gap: 0.5rem;
         padding: 1.25rem;
+    }
+
+    .portfolio-item {
+        flex: 0 0 250px;
+        height: 180px;
+    }
+    
+    .portfolio-grid {
+        gap: 1rem;
+    }
+    
+    .modal-content {
+        max-width: 95%;
     }
 } 

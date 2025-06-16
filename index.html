@@ -120,27 +120,74 @@
 
         <section id="portfolio" class="portfolio">
             <h2>Наши работы</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="portfolio-content">
-                        <h3>Коттедж в Вологде</h3>
-                        <p>Комплексное оснащение инженерными системами</p>
+            <div class="portfolio-scroll">
+                <div class="portfolio-grid">
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo1.jpg" alt="Наши работы">
                     </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-content">
-                        <h3>Загородный дом</h3>
-                        <p>Монтаж системы отопления и водоснабжения</p>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo2.jpg" alt="Наши работы">
                     </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-content">
-                        <h3>Коттеджный поселок</h3>
-                        <p>Проектирование и монтаж канализации</p>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo3.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo4.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo5.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo6.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo7.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo8.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo9.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo10.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo11.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo12.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo13.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo14.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo15.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo16.jpg" alt="Наши работы">
+                    </div>
+                    <div class="portfolio-item" onclick="openModal(this)">
+                        <img src="images/gallery/photo17.jpg" alt="Наши работы">
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Modal -->
+        <div id="imageModal" class="modal">
+            <div class="modal-close" onclick="closeModal()">×</div>
+            <div class="modal-content">
+                <img id="modalImage" class="modal-image" src="" alt="Увеличенное изображение">
+                <div class="modal-nav">
+                    <button onclick="prevImage()">❮</button>
+                    <button onclick="nextImage()">❯</button>
+                </div>
+            </div>
+        </div>
 
         <section id="faq" class="faq">
             <h2>Часто задаваемые вопросы</h2>
@@ -241,6 +288,88 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        let currentImageIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Открытие модального окна
+        function openModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const img = element.querySelector('img');
+            
+            // Находим индекс текущего изображения
+            const items = document.querySelectorAll('.portfolio-item');
+            currentImageIndex = Array.from(items).indexOf(element);
+            
+            modal.style.display = 'flex';
+            modalImg.src = img.src;
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Закрытие модального окна
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Переход к предыдущему изображению
+        function prevImage() {
+            const items = document.querySelectorAll('.portfolio-item');
+            currentImageIndex = (currentImageIndex - 1 + items.length) % items.length;
+            const img = items[currentImageIndex].querySelector('img');
+            document.getElementById('modalImage').src = img.src;
+        }
+
+        // Переход к следующему изображению
+        function nextImage() {
+            const items = document.querySelectorAll('.portfolio-item');
+            currentImageIndex = (currentImageIndex + 1) % items.length;
+            const img = items[currentImageIndex].querySelector('img');
+            document.getElementById('modalImage').src = img.src;
+        }
+
+        // Обработка свайпов
+        document.getElementById('modalImage').addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById('modalImage').addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                nextImage(); // Свайп влево
+            } else if (touchEndX > touchStartX + swipeThreshold) {
+                prevImage(); // Свайп вправо
+            }
+        }
+
+        // Обработка клавиш
+        document.addEventListener('keydown', function(event) {
+            if (document.getElementById('imageModal').style.display === 'flex') {
+                if (event.key === 'Escape') {
+                    closeModal();
+                } else if (event.key === 'ArrowLeft') {
+                    prevImage();
+                } else if (event.key === 'ArrowRight') {
+                    nextImage();
+                }
+            }
+        });
+
+        // Закрытие по клику вне изображения
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html> 
